@@ -1,0 +1,54 @@
+import time  # Import time module for measuring typing duration
+
+# Original sentence the user will type
+string = "Python is an interpreted, high-level programming language"
+word_count = len(string.split())  # Split the sentence into words and count them
+border = '-+-' * 10  # Create a border line for formatting
+
+# Function to display the instructions
+def createbox():
+    print(border)  # Print the border line
+    print()  # Print an empty line
+    print('Enter the phrase as fast as possible and with accuracy')  # Instruction to the user
+    print()  # Print another empty line
+
+# Infinite loop to keep the game running until the user decides to stop
+while True:
+    createbox()  # Call the function to display the instructions and border
+    print(string, '\n')  # Display the original sentence the user needs to type
+    t0 = time.time()  # Record the start time before the user begins typing
+    # Take input from the user (the typed sentence)
+    inputText = str(input())  
+    
+    t1 = time.time()  # Record the end time after the user finishes typing
+    
+    # Calculate the length of the user input by counting the words
+    lengthOfInput = len(inputText.split())
+    
+    # Calculate accuracy by comparing words from the user input and the original sentence
+    # Convert both to sets to remove duplicates and find the common words
+    accuracy = len(set(inputText.split()) & set(string.split()))
+    
+    # Accuracy as a percentage: Divide the number of correct words by the total words in the original sentence
+    accuracy = (accuracy / word_count)
+    
+    # Calculate the total time taken to type the sentence
+    timeTaken = (t1 - t0)
+    
+    # Calculate words per minute based on the time taken and the number of words typed
+    wordsperminute = (lengthOfInput / timeTaken) * 60 
+    
+    # Display the results to the user
+    print('Total words \t:', lengthOfInput)  # Show the number of words typed by the user
+    print('Time used \t:', round(timeTaken, 2), 'seconds')  # Show the time taken to type
+    print('Your accuracy \t:', round(accuracy * 100, 3), '%')  # Show accuracy as a percentage
+    print('Speed is \t:', round(wordsperminute, 2), 'words per minute')  # Show typing speed (WPM)
+    
+    # Prompt the user if they want to retry the game
+    retry = input("Do you want to retry? (yes/no): ").strip().lower()  # Strip spaces and convert input to lowercase
+    
+    # If the user enters 'no', the game ends, otherwise it repeats
+    if retry == 'no':
+        print('Thank you, bye bye.')  # Farewell message
+        time.sleep(1.5)  # Pause for 1.5 seconds before ending
+        break  # Exit the loop and end the game
